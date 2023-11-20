@@ -5,6 +5,7 @@ import SubTitleSection from "../../../components/subTitleSection/SubTitleSection
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxios from "../../../customsHooks/useAxiosSecure/useAxios";
+import { Link } from "react-router-dom";
 const Cart = () => {
   const [cart, refetch] = useCart();
   const axiosSecure = useAxios();
@@ -29,7 +30,7 @@ const Cart = () => {
         axiosSecure.delete(`/carts/${id}`).then((res) => {
           // console.log(res);
           if (res.data.deletedCount > 0) {
-            refetch()
+            refetch();
             Swal.fire({
               title: "Deleted!",
               text: "Your item has been deleted.",
@@ -53,7 +54,13 @@ const Cart = () => {
         <h1 className="text-[32px] text-[#151515] font-bold text-center">
           Total Price :${totalPrice}
         </h1>
-        <button className="btn btn-outline btn-secondary">Pay</button>
+        {cart.length ? (
+          <Link to={"/dashboard/payment"}>
+            <button className="btn btn-outline btn-secondary">Pay</button>
+          </Link>
+        ) : (
+          <button disabled className="btn btn-outline btn-secondary">Pay</button>
+        )}
       </div>
       <div className="overflow-x-auto">
         <table className="table w-full">

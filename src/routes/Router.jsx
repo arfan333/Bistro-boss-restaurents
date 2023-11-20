@@ -13,6 +13,12 @@ import Cart from "../pages/DashboardPage/cartPage/Cart";
 import AllUsers from "../pages/DashboardPage/allUsersDashboardPage/AllUsers";
 import AddItems from "../pages/DashboardPage/AddItemsAdminPanelPage/AddItems";
 import AdminRoutes from "./adminRoutesSection/AdminRoutes";
+import ManageItems from "../pages/DashboardPage/ManageItemsAdminPanelPage/ManageItems";
+import UpdateItem from "../pages/DashboardPage/updatedItemDashboardPage/UpdateItem";
+import Payment from "../pages/DashboardPage/paymentPage/Payment";
+import PaymentHistory from "../pages/DashboardPage/paymentHistoryDashboardPage/PaymentHistory";
+import AdminHome from "../pages/DashboardPage/adminHomeDashboardPage/AdminHome";
+import UserHome from "../pages/DashboardPage/userHomeDashboardPage/UserHome";
 
 export const router = createBrowserRouter([
   {
@@ -64,10 +70,30 @@ export const router = createBrowserRouter([
     children: [
       // normal users routes
       {
+        path: "userHome",
+        element: <UserHome></UserHome>,
+      },
+      {
         path: "cart",
         element: <Cart></Cart>,
       },
+      {
+        path: "payment",
+        element: <Payment></Payment>,
+      },
+      {
+        path: "paymentHistory",
+        element: <PaymentHistory></PaymentHistory>,
+      },
       // admin user only routes
+      {
+        path: "adminHome",
+        element: (
+          <AdminRoutes>
+            <AdminHome></AdminHome>
+          </AdminRoutes>
+        ),
+      },
       {
         path: "addItems",
         element: (
@@ -76,6 +102,24 @@ export const router = createBrowserRouter([
             <AddItems></AddItems>
           </AdminRoutes>
         ),
+      },
+      {
+        path: "manageItems",
+        element: (
+          <AdminRoutes>
+            <ManageItems></ManageItems>
+          </AdminRoutes>
+        ),
+      },
+      {
+        path: "updateItems/:id",
+        element: (
+          <AdminRoutes>
+            <UpdateItem></UpdateItem>
+          </AdminRoutes>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/menu/${params.id}`),
       },
       {
         path: "allUsers",
